@@ -41,6 +41,8 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Frontend**: HTML, CSS, JavaScript
 - **Security**: Regex-based validation, rate limiting
 
+## Project Structure
+
 - `static/` – Frontend assets (CSS, JavaScript, images)
 - `templates/` – HTML templates for Flask
 - `app.py` – Main Flask application
