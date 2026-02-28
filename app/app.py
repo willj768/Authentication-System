@@ -1,7 +1,13 @@
 from flask import Flask, request, jsonify, render_template
 from auth import register, login, generateRandomPassword
+import os
 
-app = Flask(__name__)
+projectRoot = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+templateDir = os.path.join(projectRoot, "templates")
+staticDir = os.path.join(projectRoot, "static")
+
+app = Flask(__name__, template_folder=templateDir, static_folder=staticDir)
 
 @app.route("/")
 def home():
