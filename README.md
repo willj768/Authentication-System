@@ -43,8 +43,6 @@ A full-featured web-based authentication system built with Flask, featuring user
 
 ## Project Structure
 
-## Project Structure
-
 ```
 Authentication-System/
 ├── app/
