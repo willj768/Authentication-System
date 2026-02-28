@@ -44,17 +44,22 @@ A full-featured web-based authentication system built with Flask, featuring user
 ## Project Structure
 
 Authentication-System/
+│
 ├── app/
-│   ├── app.py              – Main Flask application and route handlers
-│   └── auth.py             – Authentication logic, password hashing, and validation utilities
+│   ├── app.py          # Main Flask application and route handlers
+│   └── auth.py         # Authentication logic, password hashing, and validation
+│
 ├── data/
-│   ├── userdata.csv        – Stores user emails, hashed passwords, and creation dates
-│   ├── logs.csv            – Records all login attempts (email, timestamp, success/failure)
-│   └── failedattempts.csv  – Tracks failed login attempts for account lockout enforcement
+│   ├── userdata.csv         # User emails, hashed passwords, and creation dates
+│   ├── logs.csv             # All login attempts (email, timestamp, success/failure)
+│   └── failedattempts.csv   # Failed login attempts for account lockout enforcement
+│
 ├── static/
-│   ├── style.css           – Dark theme styling for responsive web interface
-│   └── script.js           – Client-side JavaScript for form handling and API calls
+│   ├── style.css       # Dark theme styling for responsive web interface
+│   └── script.js       # Client-side JavaScript for form handling and API calls
+│
 ├── templates/
-│   └── index.html          – Main HTML template for Flask
-├── README.md               – Project documentation
-└── .gitignore              – Git ignore rules
+│   └── index.html      # Main HTML template for Flask
+│
+├── README.md           # Project documentation
+└── .gitignore          # Git ignore rules
