@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from hash import register, login, generateRandomPassword
+from auth import register, login, generateRandomPassword
 
 app = Flask(__name__)
 
