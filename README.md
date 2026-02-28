@@ -43,7 +43,6 @@ A full-featured web-based authentication system built with Flask, featuring user
 
 ## Project Structure
 
-```
 Authentication-System/
 ├── app/
 │   ├── app.py              – Main Flask application and route handlers
@@ -59,4 +58,3 @@ Authentication-System/
 │   └── index.html          – Main HTML template for Flask
 ├── README.md               – Project documentation
 └── .gitignore              – Git ignore rules
-```
