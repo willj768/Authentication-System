@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authentication System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Authentication System</h1>
+
+        <div class="card">
+            <h2>Login</h2>
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <label>
+                <input type="checkbox" onclick="togglePassword('loginPassword')">
+                Show Password
+            </label>
+            <button onclick="login()">Login</button>
+            <p id="loginMessage"></p>
+        </div>
+
+        <div class="card">
+            <h2>Register</h2>
+            <input type="email" id="regEmail" placeholder="Email">
+            <input type="password" id="regPassword" placeholder="Password">
+            <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
+            <button onclick="generatePassword()">Generate Password</button>
+            <label>
+                <input type="checkbox" onclick="togglePassword(['regPassword', 'regConfirmPassword'])">
+                Show Password
+            </label>
+            <button onclick="register()">Create Account</button>
+            <p id="regMessage"></p>
+        </div>
+    </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
