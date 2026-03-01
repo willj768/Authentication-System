@@ -5,10 +5,15 @@ import random
 import string
 import time
 import re
+import os
 
-REGISTER_CSV_PATH = r"C:\Users\willj\OneDrive\Documents\VS Code\Python\Hashing\userdata.csv"
-LOGS_CSV_PATH = r"C:\Users\willj\OneDrive\Documents\VS Code\Python\Hashing\logs.csv"
-FAILURE_CSV_PATH = r"C:\Users\willj\OneDrive\Documents\VS Code\Python\Hashing\failedattempts.csv"
+REGISTER_CSV_NAME = "userdata.csv"
+LOGS_CSV_NAME = "logs.csv"
+FAILURE_CSV_NAME = "failedattempts.csv"
+
+REGISTER_CSV_PATH = os.path.abspath(REGISTER_CSV_NAME)
+LOGS_CSV_PATH = os.path.abspath(LOGS_CSV_NAME)
+FAILURE_CSV_PATH = os.path.abspath(FAILURE_CSV_NAME)
 
 WINDOW_SECONDS = 300
 MAX_ATTEMPTS = 3
