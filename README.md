@@ -48,7 +48,15 @@ Authentication-System/
 │
 ├── app/
 │   ├── app.py               # Main Flask application and route handlers
-│   └── auth.py              # Authentication logic, password hashing, and validation
+│   └── auth/
+│       ├── __init__.py      # Exposes register, login, generateRandomPassword
+│       ├── auth.py          # Core register and login logic
+│       ├── config.py        # Constants, file paths, and regex patterns
+│       ├── csv_handler.py   # CSV load/save functions
+│       ├── validators.py    # Email and password validation
+│       ├── password_utils.py # Random password generation
+│       ├── rate_limiter.py  # Failed attempt tracking and account lockout
+│       └── logger.py        # Login attempt logging
 │
 ├── data/
 │   ├── userdata.csv         # User emails, hashed passwords, and creation dates
