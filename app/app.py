@@ -17,9 +17,6 @@ def home():
 def registerRoute():
     data = request.json
     success, message = register(data["email"], data["password"], data["confirmPassword"])
-
-    if data["password"] != data["confirmPassword"]:
-        return jsonify({"success": False, "message": "Passwords do not match"})
     return jsonify({"success": success, "message": message})
 
 @app.route("/login", methods=["POST"])
@@ -30,10 +27,8 @@ def login_route():
 
 @app.route("/generate-password", methods=["GET"])
 def generatePasswordRoute():
-    password = generateRandomPassword()
-    confirmPassword = password
-    return jsonify({"password": password, "confirmPassword": confirmPassword})
+    return jsonify({"password": generateRandomPassword()})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
 
