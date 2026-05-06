@@ -120,4 +120,5 @@ Authentication-System/
 ## Notes
 > This project uses CSV files for data storage and is intended for educational purposes. Not recommended for production use.
 
-
+## License
+MIT License - see [LICENSE](LICENSE) for details
