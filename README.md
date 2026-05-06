@@ -52,6 +52,33 @@ A full-featured web-based authentication system built with Flask, featuring user
 ### Validation Example
 ![Validation](screenshots/errormsg.png)
 
+## Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/Authentication-System.git
+cd Authentication-System
+```
+
+2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the Flask app
+
+```bash
+python app/app.py
+```
+
+4. Open in browser
+
+```bash
+http://127.0.0.1:5000
+```
+
 ## Project Structure
 
 ```
