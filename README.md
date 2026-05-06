@@ -52,6 +52,10 @@ A full-featured web-based authentication system built with Flask, featuring user
 ### Validation Example
 ![Validation](screenshots/errormsg.png)
 
+## Prerequisites
+- Python 3.10+
+- Dependencies: `pip install -r requirements.txt`
+
 ## Installation
 
 1. Clone the repository
