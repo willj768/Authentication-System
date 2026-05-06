@@ -57,7 +57,7 @@ A full-featured web-based authentication system built with Flask, featuring user
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/Authentication-System.git
+git clone https://github.com/willj768/Authentication-System.git
 cd Authentication-System
 ```
 
@@ -70,7 +70,7 @@ pip install -r requirements.txt
 3. Run the Flask app
 
 ```bash
-python app/app.py
+python src/app.py
 ```
 
 4. Open in browser
