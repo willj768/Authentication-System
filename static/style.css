@@ -19,7 +19,9 @@ body {
     border-radius: 8px;
 }
 
-input {
+input[type="email"],
+input[type="password"],
+input[type="text"] {
     width: 95%;
     padding: 10px;
     margin-bottom: 10px;
@@ -39,4 +41,28 @@ button {
 
 button:hover {
     background: #45a049;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.password-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin: 4px auto 10px auto;
+    cursor: pointer;
+}
+
+.register-toggle {
+    margin: 0px auto 10px auto;
+}
+
+.generate-btn {
+    margin-bottom: 10px;
 }

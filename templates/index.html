@@ -13,7 +13,7 @@
             <h2>Login</h2>
             <input type="email" id="loginEmail" placeholder="Email">
             <input type="password" id="loginPassword" placeholder="Password">
-            <label>
+            <label class="password-toggle">
                 <input type="checkbox" onclick="togglePassword('loginPassword')">
                 Show Password
             </label>
@@ -26,8 +26,8 @@
             <input type="email" id="regEmail" placeholder="Email">
             <input type="password" id="regPassword" placeholder="Password">
             <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
-            <button onclick="generatePassword()">Generate Password</button>
-            <label>
+            <button class="generate-btn" onclick="generatePassword()">Generate Password</button>
+            <label class="password-toggle register-toggle">
                 <input type="checkbox" onclick="togglePassword(['regPassword', 'regConfirmPassword'])">
                 Show Password
             </label>
