@@ -84,7 +84,7 @@ http://127.0.0.1:5000
 ```
 Authentication-System/
 │
-├── app/
+├── src/
 │   ├── app.py               # Main Flask application and route handlers
 │   └── auth/
 │       ├── __init__.py      # Exposes register, login, generateRandomPassword
@@ -108,6 +108,7 @@ Authentication-System/
 ├── templates/
 │   └── index.html           # Main HTML template for Flask
 │
+├── requirements.txt          # Project dependencies
 ├── README.md                # Project documentation
 └── .gitignore               # Git ignore rules
 ```
