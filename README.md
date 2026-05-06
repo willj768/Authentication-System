@@ -41,6 +41,17 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Frontend**: HTML, CSS, JavaScript
 - **Security**: Regex-based validation, rate limiting
 
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Complex Password Generation
+![Registration Page](screenshots/pwgen.png)
+
+### Validation Example
+![Validation](screenshots/errormsg.png)
+
 ## Project Structure
 
 ```
