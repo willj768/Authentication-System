@@ -51,12 +51,12 @@ def login(email, password):
     storedHash = dfRegister.loc[dfRegister["email"] == email, "password"].values[0]
     storedHash = storedHash.encode('utf-8')
 
-    if bcrypt.checkpw(password.encode('utf-8'), storedHash):
-            
-            locked, minutes, seconds = isLocked(email)
+    locked, minutes, seconds = isLocked(email)
 
-            if locked:
-                return False, f"Too many attempts. Try again in {minutes}m {seconds}s."
+    if locked:
+        return False, f"Too many attempts. Try again in {minutes}m {seconds}s."
+
+    if bcrypt.checkpw(password.encode('utf-8'), storedHash):
 
             loginResult = "Success"
             logUser(email, now, loginResult)
