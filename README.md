@@ -52,6 +52,10 @@ A full-featured web-based authentication system built with Flask, featuring user
 ### Validation Example
 ![Validation](screenshots/errormsg.png)
 
+## Prerequisites
+- Python 3.10+
+- Dependencies: `pip install -r requirements.txt`
+
 ## Installation
 
 1. Clone the repository
@@ -112,3 +116,9 @@ Authentication-System/
 ├── README.md                # Project documentation
 └── .gitignore               # Git ignore rules
 ```
+
+## Notes
+> This project uses CSV files for data storage and is intended for educational purposes. Not recommended for production use.
+
+## License
+MIT License - see [LICENSE](LICENSE) for details
