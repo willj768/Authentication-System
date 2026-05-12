@@ -1,5 +1,4 @@
 # Authentication System
-
 A full-featured web-based authentication system built with Flask, featuring user registration, secure login, password hashing, and account lockout protection.
 
 ## Features
@@ -22,10 +21,10 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Failed Attempt Tracking**: Monitor and log failed authentication attempts
 
 ### 📊 Data Management
-- **CSV-based Storage**: User credentials, logs, and failed attempts stored in CSV files
-- **User Data**: Stores email, hashed password, and account creation date
-- **Login Logs**: Records email, timestamp, and login result (Success/Fail)
-- **Failed Attempts**: Tracks failed login attempts with timestamps for lockout enforcement
+- **SQLite Database**: User credentials, logs, and failed attempts stored in a local SQLite database
+- **Users Table**: Stores email, hashed password, and account creation date
+- **Logs Table**: Records email, timestamp, and login result (Success/Fail)
+- **Failed Attempts Table**: Tracks failed login attempts with timestamps for lockout enforcement
 
 ### 🎨 User Interface
 - **Responsive Web Interface**: Clean, modern UI with dark theme
@@ -34,10 +33,9 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Auto-generated Passwords**: One-click strong password generation for registration
 
 ## Technology Stack
-
 - **Backend**: Flask (Python)
 - **Password Hashing**: bcrypt
-- **Data Storage**: pandas & CSV files
+- **Database**: SQLite
 - **Frontend**: HTML, CSS, JavaScript
 - **Security**: Regex-based validation, rate limiting
 
@@ -59,26 +57,22 @@ A full-featured web-based authentication system built with Flask, featuring user
 ## Installation
 
 1. Clone the repository
-
 ```bash
 git clone https://github.com/willj768/Authentication-System.git
 cd Authentication-System
 ```
 
 2. Install dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
 
 3. Run the Flask app
-
 ```bash
 python src/app.py
 ```
 
 4. Open in browser
-
 ```bash
 http://127.0.0.1:5000
 ```
@@ -114,9 +108,6 @@ Authentication-System/
 ├── README.md                # Project documentation
 └── .gitignore               # Git ignore rules
 ```
-
-## Notes
-> This project uses CSV files for data storage and is intended for educational purposes. Not recommended for production use.
 
 ## License
 MIT License - see [LICENSE](LICENSE) for details
