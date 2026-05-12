@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 from auth import register, login, generateRandomPassword
 import os
+from auth.db_handler import initDB
+
+initDB()
 
 projectRoot = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

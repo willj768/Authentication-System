@@ -1,6 +1,6 @@
 import bcrypt
 from datetime import datetime
-from .csv_handler import loadRegisterData, saveRegisterData
+from .db_handler import loadRegisterData, saveRegisterData
 from .data_validation import isValidEmail, checkPassword
 from .user_lockout import isLocked, resetFailedAttempts, logFailedAttempt
 from .logger import logUser

@@ -1,7 +1,7 @@
 import time
 import pandas as pd
 from .config import WINDOW_SECONDS, MAX_ATTEMPTS
-from .csv_handler import loadFailedLogsData, saveFailedLogsData
+from .db_handler import loadFailedLogsData, saveFailedLogsData
 import traceback
 
 def logFailedAttempt(email):

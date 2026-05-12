@@ -7,6 +7,8 @@ REGISTER_CSV_PATH = DATA_DIR / "userdata.csv"
 LOGS_CSV_PATH = DATA_DIR / "logs.csv"
 FAILURE_CSV_PATH = DATA_DIR / "failedattempts.csv"
 
+DB_PATH = DATA_DIR / "auth.db"
+
 #Adjust to 300 after testing
 WINDOW_SECONDS = 10
 MAX_ATTEMPTS = 3

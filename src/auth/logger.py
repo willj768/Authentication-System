@@ -1,4 +1,4 @@
-from .csv_handler import loadLogsData, saveLogsData
+from .db_handler import loadLogsData, saveLogsData
 from .user_lockout import logFailedAttempt
 
 def logUser(email, now, loginResult):
@@ -7,13 +7,10 @@ def logUser(email, now, loginResult):
 
     newUserLog = {
     "email": email,
-    "user_log": now,
-    "login_result": loginResult
+    "timestamp": now,
+    "result": loginResult
     }
 
     dfLogs.loc[len(dfLogs)] = newUserLog
 
     saveLogsData(dfLogs)
-
-    #if loginResult == "Fail":
-        #logFailedAttempt(email)
