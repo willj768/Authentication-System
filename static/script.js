@@ -21,6 +21,10 @@ function register() {
 function login() {
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
+    const button = document.getElementById("loginButton");
+
+    button.disabled = true;
+    button.textContent = "Logging in...";
 
     fetch("/login", {
         method: "POST",
@@ -34,6 +38,12 @@ function login() {
         const message = document.getElementById("loginMessage");
         message.textContent = data.message;
         message.style.color = data.success ? "green" : "red";
+    })
+    .finally(() => {
+        setTimeout(() => {
+            button.disabled = false;
+            button.textContent = "Login";
+        }, 3000);
     });
 }
 
