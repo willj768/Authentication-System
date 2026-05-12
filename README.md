@@ -94,16 +94,14 @@ Authentication-System/
 │       ├── __init__.py      # Exposes register, login, generateRandomPassword
 │       ├── auth.py          # Core register and login logic
 │       ├── config.py        # Constants, file paths, and regex patterns
-│       ├── csv_handler.py   # CSV load/save functions
+│       ├── db_handler.py    # SQLite database connection and query functions
 │       ├── validators.py    # Email and password validation
 │       ├── password_utils.py # Random password generation
 │       ├── rate_limiter.py  # Failed attempt tracking and account lockout
 │       └── logger.py        # Login attempt logging
 │
 ├── data/
-│   ├── userdata.csv         # User emails, hashed passwords, and creation dates
-│   ├── logs.csv             # All login attempts (email, timestamp, success/failure)
-│   └── failedattempts.csv   # Failed login attempts for account lockout enforcement
+│   └── auth.db              # SQLite database (users, logs, failed_attempts)
 │
 ├── static/
 │   ├── style.css            # Dark theme styling for responsive web interface
@@ -112,7 +110,7 @@ Authentication-System/
 ├── templates/
 │   └── index.html           # Main HTML template for Flask
 │
-├── requirements.txt          # Project dependencies
+├── requirements.txt         # Project dependencies
 ├── README.md                # Project documentation
 └── .gitignore               # Git ignore rules
 ```
