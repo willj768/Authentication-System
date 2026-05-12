@@ -2,8 +2,9 @@ import bcrypt
 from datetime import datetime
 from .csv_handler import loadRegisterData, saveRegisterData
 from .data_validation import isValidEmail, checkPassword
-from .user_lockout import isLocked
+from .user_lockout import isLocked, resetFailedAttempts, logFailedAttempt
 from .logger import logUser
+from .config import TEST_MODE, TEST_EMAIL, TEST_PASSWORD
 
 def register(email, password, confirmPassword):
 
@@ -40,6 +41,10 @@ def register(email, password, confirmPassword):
 
 def login(email, password):
 
+    overrideResult = overrideLogin(email, password)
+    if overrideResult:
+        return overrideResult
+
     dfRegister = loadRegisterData()
     email = email.strip().lower()
 
@@ -60,12 +65,24 @@ def login(email, password):
 
             loginResult = "Success"
             logUser(email, now, loginResult)
+            resetFailedAttempts(email)
 
             return True, "Login successful"
+    else:
+        loginResult = "Fail"
+        logUser(email, now, loginResult)
+        logFailedAttempt(email)
     
-    loginResult = "Fail"
-    logUser(email, now, loginResult)
-    
-    return False, "Incorrect password"
-    
+        return False, "Incorrect password"
 
+def overrideLogin(email, password):
+    if not TEST_MODE:
+        return None
+
+    email = email.strip().lower()
+    password = password.strip()
+
+    if email == TEST_EMAIL and password == TEST_PASSWORD:
+        return True, "Login successful (test mode)"
+
+    return None

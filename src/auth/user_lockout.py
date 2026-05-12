@@ -2,6 +2,7 @@ import time
 import pandas as pd
 from .config import WINDOW_SECONDS, MAX_ATTEMPTS
 from .csv_handler import loadFailedLogsData, saveFailedLogsData
+import traceback
 
 def logFailedAttempt(email):
 
@@ -33,6 +34,7 @@ def logFailedAttempt(email):
     saveFailedLogsData(dfFailedLogs)
 
 def isLocked(email):
+
     dfFailedLogs = loadFailedLogsData()
     email = email.lower()
     now = time.time()
@@ -50,7 +52,12 @@ def isLocked(email):
     
     timePassed = now - float(firstTime)
     
-    if attempts >= MAX_ATTEMPTS and timePassed <= WINDOW_SECONDS:
+    if timePassed > WINDOW_SECONDS:
+        dfFailedLogs = dfFailedLogs[~mask]
+        saveFailedLogsData(dfFailedLogs)
+        return False, 0, 0
+
+    if attempts >= MAX_ATTEMPTS:
         
         timeRemaining = WINDOW_SECONDS - timePassed
 
@@ -58,6 +65,21 @@ def isLocked(email):
         seconds = round(timeRemaining % 60)
 
         return True, minutes, seconds
-
+    
+    if timePassed > WINDOW_SECONDS:
+        dfFailedLogs.loc[mask, "attempt_failed"] = 0
+        dfFailedLogs.loc[mask, "first_attempt_time"] = None
+        saveFailedLogsData(dfFailedLogs)
     
     return False, 0, 0
+
+def resetFailedAttempts(email):
+    dfFailedLogs = loadFailedLogsData()
+    email = email.lower()
+
+    mask = dfFailedLogs["email"].str.lower() == email
+
+    if mask.any():
+        dfFailedLogs.loc[mask, "attempt_failed"] = 0
+        dfFailedLogs.loc[mask, "first_attempt_time"] = None
+        saveFailedLogsData(dfFailedLogs)

@@ -7,7 +7,12 @@ REGISTER_CSV_PATH = DATA_DIR / "userdata.csv"
 LOGS_CSV_PATH = DATA_DIR / "logs.csv"
 FAILURE_CSV_PATH = DATA_DIR / "failedattempts.csv"
 
-WINDOW_SECONDS = 300
+#Adjust to 300 after testing
+WINDOW_SECONDS = 10
 MAX_ATTEMPTS = 3
 
 EMAIL_REGEX = r"^[a-zA-Z0-9]+[a-zA-Z0-9._+-]*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$"
+
+TEST_MODE = True
+TEST_EMAIL = "test"
+TEST_PASSWORD = "test"

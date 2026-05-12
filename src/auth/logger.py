@@ -15,5 +15,5 @@ def logUser(email, now, loginResult):
 
     saveLogsData(dfLogs)
 
-    if loginResult == "Fail":
-        logFailedAttempt(email)
+    #if loginResult == "Fail":
+        #logFailedAttempt(email)
