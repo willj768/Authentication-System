@@ -33,5 +33,5 @@ def generatePasswordRoute():
     return jsonify({"password": generateRandomPassword()})
 
 if __name__ == "__main__":
-    app.run(debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
+    app.run(host='0.0.0.0', debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
 
