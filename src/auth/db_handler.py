@@ -3,13 +3,30 @@ import pandas as pd
 from .config import DB_PATH
 
 def getConnection():
+
+    """
+    Creates and returns a connection to the SQLite database
+
+    Returns:
+        sqlite3.Connection: Active database connection
+    """
+
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+    conn.row_factory = sqlite3.Row #Allows results to be accessed by column name rather than index
     return conn
 
 def initDB():
+
+    #Initialises the database by creating required tables if they do not already exist
+
     conn = getConnection()
-    cursor = conn.cursor()
+    cursor = conn.cursor() #Allows SQL commands to be run
+
+    """
+    users - Stores registered accounts
+    logs - Tracks all login attempts
+    failed_attempts - Tracks consecutive failures for each email
+    """
 
     cursor.executescript("""
         CREATE TABLE IF NOT EXISTS users (
@@ -38,12 +55,18 @@ def initDB():
     conn.close()
 
 def loadRegisterData():
+
+    #Loads all data from the users table into a pandas dataframe and returns it
+
     conn = getConnection()
     df = pd.read_sql_query("SELECT * FROM users", conn)
     conn.close()
     return df
 
 def saveRegisterData(dfRegister):
+
+    #Saves user data into the user table
+
     conn = getConnection()
     cursor = conn.cursor()
 
@@ -58,12 +81,18 @@ def saveRegisterData(dfRegister):
     conn.close()
 
 def loadLogsData():
+
+    #Loads all data from the logs table into a pandas dataframe and returns it
+
     conn = getConnection()
     df = pd.read_sql_query("SELECT * FROM logs", conn)
     conn.close()
     return df
 
 def saveLogsData(dfLogs):
+
+    #Saves log data into the logs table
+
     conn = getConnection()
     cursor = conn.cursor()
 
@@ -78,12 +107,18 @@ def saveLogsData(dfLogs):
     conn.close()
 
 def loadFailedLogsData():
+
+    #Loads all data from the failed_attempts table into a pandas dataframe and returns it
+
     conn = getConnection()
     df = pd.read_sql_query("SELECT * FROM failed_attempts", conn)
     conn.close()
     return df
 
 def saveFailedLogsData(dfFailedLogs):
+
+    #Saves failed attempts data into the failed_attempts table
+
     conn = getConnection()
     cursor = conn.cursor()
 
