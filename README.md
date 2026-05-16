@@ -1,5 +1,5 @@
 # Authentication System
-A full-featured web-based authentication system built with Flask, featuring user registration, secure login, password hashing, and account lockout protection.
+A full-featured web-based authentication system built with Flask and Flask-SocketIO, featuring user registration, secure login, password hashing, account lockout protection, and a real-time chat room.
 
 ## Features
 
@@ -12,6 +12,7 @@ A full-featured web-based authentication system built with Flask, featuring user
   - At least one letter
 - **Account Lockout Protection**: Implements rate limiting with automatic lockout after 3 failed login attempts within a 5-minute window
 - **Email Validation**: Validates email format using regex pattern matching
+- **Environment-based Secrets**: Sensitive credentials and configuration stored in `.env` file, never hardcoded
 
 ### 👤 User Management
 - **User Registration**: Create new accounts with email and password
@@ -19,13 +20,19 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Password Generation**: Auto-generate strong random passwords
 - **Login Logging**: Track all login attempts (success and failure)
 - **Failed Attempt Tracking**: Monitor and log failed authentication attempts
+- **Test Mode**: Developer bypass login using environment-controlled credentials
+
+### 💬 Chat Room (Under Development)
+- **Real-time Messaging**: WebSocket-powered chat using Flask-SocketIO
+- **Message Persistence**: Chat messages stored in SQLite database
+- **Per-user Attribution**: Messages stored and displayed with email
 
 ### 📊 Data Management
-- **SQLite Database**: User credentials, logs, and failed attempts stored in a local SQLite database
+- **SQLite Database**: All data stored in a local SQLite database
 - **Users Table**: Stores email, hashed password, and account creation date
 - **Logs Table**: Records email, timestamp, and login result (Success/Fail)
 - **Failed Attempts Table**: Tracks failed login attempts with timestamps for lockout enforcement
-- **Messages Table**: Stores chat messages with timestamps
+- **Messages Table**: Stores chat messages with email and timestamp
 
 ### 🎨 User Interface
 - **Responsive Web Interface**: Clean, modern UI with dark theme
@@ -34,14 +41,27 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Auto-generated Passwords**: One-click strong password generation for registration
 
 ## Technology Stack
-- **Backend**: Flask (Python), Flask-SocketIO
+- **Backend**: Flask, Flask-SocketIO (Python)
 - **Password Hashing**: bcrypt
 - **Database**: SQLite
 - **Frontend**: HTML, CSS, JavaScript
 - **Security**: Regex-based validation, rate limiting
+- **Configuration**: python-dotenv for environment variable management
+
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Complex Password Generation
+![Registration Page](screenshots/pwgen.png)
+
+### Validation Example
+![Validation](screenshots/errormsg.png)
 
 ## Prerequisites
 - Python 3.10+
+- Virtual environment (recommended)
 - Dependencies: `pip install -r requirements.txt`
 
 ## Installation
@@ -88,6 +108,15 @@ http://<your-pi-ip>:5000     # from another device on the network
 
 > ⚠️ Never commit your `.env` file. It is included in `.gitignore` by default.
 
+## Environment Variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `TEST_MODE` | Enables developer login bypass | `False` |
+| `TEST_EMAIL` | Email used for test mode login | None |
+| `TEST_PASSWORD` | Password used for test mode login | None |
+| `FLASK_DEBUG` | Enables Flask debug mode | `false` |
+
 ## Project Structure
 
 ```
@@ -129,6 +158,8 @@ Authentication-System/
 │   ├── chat.html                   # Chat room HTML template
 │   └── index.html                  # Main HTML template for Flask
 │
+├── .env                            # Environment variables (not committed)
+├── .env.example                    # Example environment variable template
 ├── .gitignore                      # Git ignore rules
 ├── README.md                       # Project documentation
 └── requirements.txt                # Project dependencies
