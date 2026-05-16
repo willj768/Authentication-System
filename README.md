@@ -25,6 +25,7 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Users Table**: Stores email, hashed password, and account creation date
 - **Logs Table**: Records email, timestamp, and login result (Success/Fail)
 - **Failed Attempts Table**: Tracks failed login attempts with timestamps for lockout enforcement
+- **Messages Table**: Stores chat messages with timestamps
 
 ### 🎨 User Interface
 - **Responsive Web Interface**: Clean, modern UI with dark theme
@@ -33,26 +34,22 @@ A full-featured web-based authentication system built with Flask, featuring user
 - **Auto-generated Passwords**: One-click strong password generation for registration
 
 ## Technology Stack
-- **Backend**: Flask (Python)
+- **Backend**: Flask (Python), Flask-SocketIO
 - **Password Hashing**: bcrypt
 - **Database**: SQLite
 - **Frontend**: HTML, CSS, JavaScript
 - **Security**: Regex-based validation, rate limiting
 
-## Screenshots
-
-### Login Page
-![Login Page](screenshots/login.png)
-
-### Complex Password Generation
-![Registration Page](screenshots/pwgen.png)
-
-### Validation Example
-![Validation](screenshots/errormsg.png)
-
 ## Prerequisites
 - Python 3.10+
 - Dependencies: `pip install -r requirements.txt`
+
+## Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/willj768/Authentication-System.git
+cd Authentication-System
 
 ## Installation
 
