@@ -79,31 +79,45 @@ http://127.0.0.1:5000
 ```
 Authentication-System/
 │
-├── src/
-│   ├── app.py               # Main Flask application and route handlers
-│   └── auth/
-│       ├── __init__.py      # Exposes register, login, generateRandomPassword
-│       ├── auth.py          # Core register and login logic
-│       ├── config.py        # Constants, file paths, and regex patterns
-│       ├── db_handler.py    # SQLite database connection and query functions
-│       ├── validators.py    # Email and password validation
-│       ├── password_utils.py # Random password generation
-│       ├── rate_limiter.py  # Failed attempt tracking and account lockout
-│       └── logger.py        # Login attempt logging
-│
 ├── data/
-│   └── auth.db              # SQLite database (users, logs, failed_attempts)
+│   └── auth.db                     # SQLite database (users, logs, failed_attempts, messages)
+│
+├── screenshots/
+│   ├── errormsg.png
+│   ├── login.png
+│   └── pwgen.png
+│
+├── src/
+│   ├── auth/
+│   │   ├── __init__.py             # Exposes register, login, generateRandomPassword
+│   │   ├── auth.py                 # Core register and login logic
+│   │   ├── config.py               # Constants, file paths, and environment variables
+│   │   ├── data_validation.py      # Email and password validation
+│   │   ├── db_handler.py           # SQLite database connection and query functions
+│   │   ├── logger.py               # Login attempt logging
+│   │   ├── password_utils.py       # Random password generation
+│   │   └── user_lockout.py         # Failed attempt tracking and account lockout
+│   │
+│   ├── chat/
+│   │   ├── __init__.py             # Exposes chat functions
+│   │   ├── chat.py                 # Chat room logic and message handling
+│   │   └── db_handler.py           # Chat-specific database queries
+│   │
+│   └── app.py                      # Main Flask application and route handlers
 │
 ├── static/
-│   ├── style.css            # Dark theme styling for responsive web interface
-│   └── script.js            # Client-side JavaScript for form handling and API calls
+│   ├── chat.css                    # Chat room styling
+│   ├── chat.js                     # Client-side WebSocket and chat logic
+│   ├── script.js                   # Client-side JavaScript for auth forms
+│   └── style.css                   # Dark theme styling for responsive web interface
 │
 ├── templates/
-│   └── index.html           # Main HTML template for Flask
+│   ├── chat.html                   # Chat room HTML template
+│   └── index.html                  # Main HTML template for Flask
 │
-├── requirements.txt         # Project dependencies
-├── README.md                # Project documentation
-└── .gitignore               # Git ignore rules
+├── .gitignore                      # Git ignore rules
+├── README.md                       # Project documentation
+└── requirements.txt                # Project dependencies
 ```
 
 ## License
