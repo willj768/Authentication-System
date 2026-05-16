@@ -50,29 +50,43 @@ A full-featured web-based authentication system built with Flask, featuring user
 ```bash
 git clone https://github.com/willj768/Authentication-System.git
 cd Authentication-System
-
-## Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/willj768/Authentication-System.git
-cd Authentication-System
 ```
 
-2. Install dependencies
+2. Create and activate a virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the Flask app
+4. Set up environment variables
+```bash
+cp .env.example .env
+```
+Then open `.env` and fill in your values:
+```
+TEST_MODE=False
+TEST_EMAIL=
+TEST_PASSWORD=
+FLASK_DEBUG=false
+```
+
+5. Run the Flask app
 ```bash
 python src/app.py
 ```
 
-4. Open in browser
-```bash
-http://127.0.0.1:5000
+6. Open in browser
 ```
+http://127.0.0.1:5000        # local
+http://<your-pi-ip>:5000     # from another device on the network
+```
+
+> ⚠️ Never commit your `.env` file. It is included in `.gitignore` by default.
 
 ## Project Structure
 
