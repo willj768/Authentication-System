@@ -1,5 +1,4 @@
 import sqlite3
-import pandas as pd
 from .config import DB_PATH
 
 def getConnection():
@@ -49,21 +48,19 @@ def initDB():
             attempt_failed INTEGER DEFAULT 0,
             first_attempt_time REAL
         );
+
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT NOT NULL,
+            message TEXT NOT NULL,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
     """)
 
     conn.commit()
     conn.close()
 
-def loadRegisterData():
-
-    #Loads all data from the users table into a pandas dataframe and returns it
-
-    conn = getConnection()
-    df = pd.read_sql_query("SELECT * FROM users", conn)
-    conn.close()
-    return df
-
-def saveRegisterData(dfRegister):
+def saveRegisterData(newUser):
 
     #Saves user data into the user table
 
@@ -72,24 +69,47 @@ def saveRegisterData(dfRegister):
 
     cursor.execute(
         "INSERT INTO users (email, password, user_created) VALUES (?, ?, ?)",
-        (dfRegister.iloc[-1]["email"],
-         dfRegister.iloc[-1]["password"],
-         str(dfRegister.iloc[-1]["user_created"]))
+        (newUser["email"],
+         newUser["password"],
+         str(newUser["user_created"]))
     )
 
     conn.commit()
     conn.close()
 
-def loadLogsData():
-
-    #Loads all data from the logs table into a pandas dataframe and returns it
+def getRegisterEmail(email):
 
     conn = getConnection()
-    df = pd.read_sql_query("SELECT * FROM logs", conn)
-    conn.close()
-    return df
+    cursor = conn.cursor()
 
-def saveLogsData(dfLogs):
+    cursor.execute(
+        "SELECT email FROM users WHERE email = ?",
+        (email,)
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result is not None
+
+def getPassword(email):
+
+    conn = getConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT password FROM users WHERE email = ?",
+        (email,)
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result[0] if result is not None else None
+
+def saveLogsData(newUserLog):
 
     #Saves log data into the logs table
 
@@ -98,34 +118,94 @@ def saveLogsData(dfLogs):
 
     cursor.execute(
         "INSERT INTO logs (email, timestamp, result) VALUES (?, ?, ?)",
-        (dfLogs.iloc[-1]["email"],
-         str(dfLogs.iloc[-1]["timestamp"]),
-         dfLogs.iloc[-1]["result"])
+        (newUserLog["email"],
+         newUserLog["timestamp"],
+         newUserLog["result"])
     )
 
     conn.commit()
     conn.close()
 
-def loadFailedLogsData():
-
-    #Loads all data from the failed_attempts table into a pandas dataframe and returns it
-
-    conn = getConnection()
-    df = pd.read_sql_query("SELECT * FROM failed_attempts", conn)
-    conn.close()
-    return df
-
-def saveFailedLogsData(dfFailedLogs):
-
-    #Saves failed attempts data into the failed_attempts table
+def saveFailedLogsData(newFailedLog):
 
     conn = getConnection()
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM failed_attempts", )
+    if getFailedLog(newFailedLog["email"]):
+        cursor.execute(
+            "UPDATE failed_attempts SET attempt_failed = ?, first_attempt_time = ? WHERE email = ?",
+            (newFailedLog["attempt_failed"],
+             newFailedLog["first_attempt_time"],
+             newFailedLog["email"])
+        )
+    else:
+        cursor.execute(
+            "INSERT INTO failed_attempts (email, attempt_failed, first_attempt_time) VALUES (?, ?, ?)",
+            (newFailedLog["email"],
+             newFailedLog["attempt_failed"],
+             newFailedLog["first_attempt_time"])
+        )
+
+    conn.commit()
+    conn.close()
+
+def getFailedLog(email):
+
+    conn = getConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT email FROM failed_attempts WHERE email = ?",
+        (email,)
+    )
+
+    result = cursor.fetchone()
     
-    if not dfFailedLogs.empty:
-        dfFailedLogs.to_sql("failed_attempts", conn, if_exists="append", index=False)
+    conn.close()
+
+    return result is not None
+
+def getFirstAttempt(email):
+
+    conn = getConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT first_attempt_time FROM failed_attempts WHERE email = ?",
+        (email,)
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result[0] if result is not None else None
+
+def getAttemptNum(email):
+
+    conn = getConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT attempt_failed FROM failed_attempts WHERE email = ?",
+        (email,)
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result[0] if result is not None else None
+
+def removeFailedLog(email):
+    
+    conn = getConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM failed_attempts WHERE email = ?",
+        (email,)
+    )
 
     conn.commit()
     conn.close()

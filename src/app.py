@@ -1,7 +1,9 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session, redirect
 from auth import register, login, generateRandomPassword
 import os
 from auth.db_handler import initDB
+from flask_socketio import SocketIO, emit
+#from chat import sendMessage, loadHistory
 
 initDB()
 
@@ -11,6 +13,8 @@ templateDir = os.path.join(projectRoot, "templates")
 staticDir = os.path.join(projectRoot, "static")
 
 app = Flask(__name__, template_folder=templateDir, static_folder=staticDir)
+app.config["SECRET_KEY"] = "your-secret-key"
+socketio = SocketIO(app)
 
 @app.route("/")
 def home():
@@ -23,7 +27,7 @@ def registerRoute():
     return jsonify({"success": success, "message": message})
 
 @app.route("/login", methods=["POST"])
-def login_route():
+def loginRoute():
     data = request.json
     success, message = login(data["email"], data["password"])
     return jsonify({"success": success, "message": message})
@@ -32,6 +36,25 @@ def login_route():
 def generatePasswordRoute():
     return jsonify({"password": generateRandomPassword()})
 
+@app.route("/chat")
+def chatRoute():
+    if "email" not in session:
+        return redirect("/")
+    return render_template("chat.html")
+
+@socketio.on("connect")
+def handleConnect():
+    history = loadHistory()
+    emit("history", history)
+
+def handleMessage(data):
+    email = session.get("email", "unknown")
+    sendMessage(email, data["message"])
+    emit("message", {"email": email, "message": data["message"]}, broadcast=True)
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
+    socketio.run(app, host='0.0.0.0', debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
+
+
+
 

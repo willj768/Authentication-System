@@ -14,3 +14,6 @@ EMAIL_REGEX = r"^[a-zA-Z0-9]+[a-zA-Z0-9._+-]*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$" #
 TEST_MODE = True
 TEST_EMAIL = "test"
 TEST_PASSWORD = "test"
+
+#Chat Application
+MESSAGE_HISTORY_LIMIT = 50

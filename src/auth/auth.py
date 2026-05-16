@@ -1,6 +1,6 @@
 import bcrypt
 from datetime import datetime
-from .db_handler import loadRegisterData, saveRegisterData
+from .db_handler import saveRegisterData, getRegisterEmail, getPassword
 from .data_validation import isValidEmail, checkPassword
 from .user_lockout import isLocked, resetFailedAttempts, logFailedAttempt
 from .logger import logUser
@@ -19,7 +19,6 @@ def register(email, password, confirmPassword):
         tuple (success (boolean), message (str))
     """
 
-    dfRegister = loadRegisterData()
     email = email.strip().lower()
 
     if isValidEmail(email) == False:
@@ -29,7 +28,7 @@ def register(email, password, confirmPassword):
         return False, "Passwords do not match"
 
     #Ensures email is not already in database
-    if (dfRegister["email"].str.lower() == email).any():
+    if getRegisterEmail(email):
         return False, "Email already registered"
     
     if not checkPassword(password):
@@ -47,8 +46,7 @@ def register(email, password, confirmPassword):
     "user_created": datetime.now()
     }
 
-    dfRegister.loc[len(dfRegister)] = newUser
-    saveRegisterData(dfRegister)
+    saveRegisterData(newUser)
 
     return True, "Registration Successful"
 
@@ -69,16 +67,15 @@ def login(email, password):
     if overrideResult:
         return overrideResult
 
-    dfRegister = loadRegisterData()
     email = email.strip().lower()
 
     now = datetime.now()
 
-    if not (dfRegister["email"].str.lower() == email).any():
+    if not getRegisterEmail(email):
         return False, "Email not found"
 
     #Takes hashed password which corresponds with given email    
-    storedHash = dfRegister.loc[dfRegister["email"] == email, "password"].values[0]
+    storedHash = getPassword(email)
     storedHash = storedHash.encode('utf-8')
 
     locked, minutes, seconds = isLocked(email)
