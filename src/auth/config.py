@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 #Establishes path to database
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -11,9 +13,12 @@ MAX_ATTEMPTS = 3 #Lockout after this many attempts
 EMAIL_REGEX = r"^[a-zA-Z0-9]+[a-zA-Z0-9._+-]*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$" #Ensures emails are formatted correctly
 
 #Test environment
-TEST_MODE = True
-TEST_EMAIL = "test"
-TEST_PASSWORD = "test"
+
+load_dotenv()
+
+TEST_MODE = os.getenv("TEST_MODE", "False") == "True"
+TEST_EMAIL = os.getenv("TEST_EMAIL")
+TEST_PASSWORD = os.getenv("TEST_PASSWORD")
 
 #Chat Application
 MESSAGE_HISTORY_LIMIT = 50
