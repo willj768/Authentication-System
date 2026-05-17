@@ -47,6 +47,7 @@ A full-featured web-based authentication system built with Flask and Flask-Socke
 - **Frontend**: HTML, CSS, JavaScript
 - **Security**: Regex-based validation, rate limiting
 - **Configuration**: python-dotenv for environment variable management
+- **Containerisation**: Docker, Docker Compose
 
 ## Screenshots
 
@@ -60,11 +61,45 @@ A full-featured web-based authentication system built with Flask and Flask-Socke
 ![Validation](screenshots/errormsg.png)
 
 ## Prerequisites
-- Python 3.10+
-- Virtual environment (recommended)
-- Dependencies: `pip install -r requirements.txt`
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose (recommended)
+- Or Python 3.10+ with pip for manual setup
 
 ## Installation
+
+### With Docker (Recommended)
+
+1. Clone the repository
+```bash
+git clone https://github.com/willj768/Authentication-System.git
+cd Authentication-System
+```
+
+2. Set up environment variables
+```bash
+cp .env.example .env
+```
+Then open `.env` and fill in your values:
+```
+TEST_MODE=False
+TEST_EMAIL=
+TEST_PASSWORD=
+FLASK_DEBUG=false
+```
+
+3. Build and run the container
+```bash
+docker compose up --build -d
+```
+
+4. Open in browser
+```
+http://127.0.0.1:5000        # local
+http://<your-pi-ip>:5000     # from another device on the network
+```
+
+> The container will restart automatically on crash or reboot.
+
+### Without Docker (Manual)
 
 1. Clone the repository
 ```bash
@@ -87,23 +122,10 @@ pip install -r requirements.txt
 ```bash
 cp .env.example .env
 ```
-Then open `.env` and fill in your values:
-```
-TEST_MODE=False
-TEST_EMAIL=
-TEST_PASSWORD=
-FLASK_DEBUG=false
-```
 
 5. Run the Flask app
 ```bash
 python src/app.py
-```
-
-6. Open in browser
-```
-http://127.0.0.1:5000        # local
-http://<your-pi-ip>:5000     # from another device on the network
 ```
 
 > ⚠️ Never commit your `.env` file. It is included in `.gitignore` by default.
@@ -116,6 +138,15 @@ http://<your-pi-ip>:5000     # from another device on the network
 | `TEST_EMAIL` | Email used for test mode login | None |
 | `TEST_PASSWORD` | Password used for test mode login | None |
 | `FLASK_DEBUG` | Enables Flask debug mode | `false` |
+
+## Docker Commands
+
+```bash
+docker compose up --build -d   # build and start in background
+docker compose down            # stop the container
+docker compose logs -f         # view live logs
+docker compose restart         # restart without rebuilding
+```
 
 ## Project Structure
 
@@ -158,9 +189,12 @@ Authentication-System/
 │   ├── chat.html                   # Chat room HTML template
 │   └── index.html                  # Main HTML template for Flask
 │
+├── .dockerignore                   # Files excluded from Docker build context
 ├── .env                            # Environment variables (not committed)
 ├── .env.example                    # Example environment variable template
 ├── .gitignore                      # Git ignore rules
+├── docker-compose.yml              # Docker Compose service definitions
+├── Dockerfile                      # Docker image build instructions
 ├── README.md                       # Project documentation
 └── requirements.txt                # Project dependencies
 ```
