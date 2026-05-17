@@ -123,6 +123,8 @@ def saveLogsData(newUserLog):
          newUserLog["result"])
     )
 
+    clearLogs(cursor)
+
     conn.commit()
     conn.close()
 
@@ -209,3 +211,9 @@ def removeFailedLog(email):
 
     conn.commit()
     conn.close()
+
+def clearLogs(cursor):
+    
+    cursor.execute(
+        "DELETE FROM logs WHERE timestamp < datetime('now', '-30 days')",
+    )
