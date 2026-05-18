@@ -30,6 +30,8 @@ def registerRoute():
 def loginRoute():
     data = request.json
     success, message = login(data["email"], data["password"])
+    if success:
+        session["email"] = data["email"]
     return jsonify({"success": success, "message": message})
 
 @app.route("/generate-password", methods=["GET"])

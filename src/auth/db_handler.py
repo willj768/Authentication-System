@@ -16,7 +16,7 @@ def getConnection():
 
 def initDB():
 
-    #Initialises the database by creating required tables if they do not already exist
+    """Initialises the database by creating required tables if they do not already exist"""
 
     conn = getConnection()
     cursor = conn.cursor() #Allows SQL commands to be run
@@ -62,7 +62,12 @@ def initDB():
 
 def saveRegisterData(newUser):
 
-    #Saves user data into the user table
+    """
+    Saves user data into the users table
+
+    Args:
+        newUser (dict): Stores the email, hashed password, and timestamp
+    """
 
     conn = getConnection()
     cursor = conn.cursor()
@@ -78,6 +83,17 @@ def saveRegisterData(newUser):
     conn.close()
 
 def getRegisterEmail(email):
+
+    """
+    Checks if an email has already been registered
+    
+    Args:
+        email (str): The email given by the user
+
+    Returns:
+        True: If the email is already in the database
+        False: If the email is not in the database
+    """
 
     conn = getConnection()
     cursor = conn.cursor()
@@ -95,6 +111,18 @@ def getRegisterEmail(email):
 
 def getPassword(email):
 
+    """
+    Gets the password for the given email
+
+    Args:
+        email (str): The email given by the user
+    
+    Returns:
+        result[0] (str): The password which matches the email
+        None: If the email does not exist or the password corresponding to the given email is not found
+    """
+
+
     conn = getConnection()
     cursor = conn.cursor()
 
@@ -111,7 +139,12 @@ def getPassword(email):
 
 def saveLogsData(newUserLog):
 
-    #Saves log data into the logs table
+    """
+    Saves new logs to the logs table
+
+    Args:
+        newUserLog (dict): Stores the email, timestamp, and result of a log (success or fail)
+    """
 
     conn = getConnection()
     cursor = conn.cursor()
@@ -130,10 +163,17 @@ def saveLogsData(newUserLog):
 
 def saveFailedLogsData(newFailedLog):
 
+    """
+    Saves a failed attempt into the failed_attempts table. If the email already exists in the table then the attempt_failed value is incremented.
+
+    Args:
+        newFailedLog (dict): Stores the email, attempt number failed, and first attempt time
+    """
+
     conn = getConnection()
     cursor = conn.cursor()
 
-    if getFailedLog(newFailedLog["email"]):
+    if getFailedLog(newFailedLog["email"]): #Checks if the email given already exists in the failed attempt table
         cursor.execute(
             "UPDATE failed_attempts SET attempt_failed = ?, first_attempt_time = ? WHERE email = ?",
             (newFailedLog["attempt_failed"],
@@ -153,6 +193,17 @@ def saveFailedLogsData(newFailedLog):
 
 def getFailedLog(email):
 
+    """
+    Checks if the email given is currently the failed_attempts table
+
+    Args:
+        email (str): The email given by the user
+
+    Returns:
+        True: If the email given is in the failed_attempts table
+        False: If the email given is not in the failed_attempts table
+    """
+
     conn = getConnection()
     cursor = conn.cursor()
 
@@ -168,6 +219,17 @@ def getFailedLog(email):
     return result is not None
 
 def getFirstAttempt(email):
+
+    """
+    Gets the time of the first failed attempt from the failed_attempts table
+
+    Args:
+        email (str): The email given by the user
+
+    Returns:
+        result[0] (str): The first failed attempt time
+        None: If there is no first failed attempt time
+    """
 
     conn = getConnection()
     cursor = conn.cursor()
@@ -185,6 +247,17 @@ def getFirstAttempt(email):
 
 def getAttemptNum(email):
 
+    """
+    Gets the number of failed attempts from the failed_attempts table
+
+    Args:
+        email (str): The email given by the user
+    
+    Returns:
+        result[0] (int): The number of previous attempts failed
+        None: If there are no previous failed attempts
+    """
+
     conn = getConnection()
     cursor = conn.cursor()
 
@@ -200,6 +273,13 @@ def getAttemptNum(email):
     return result[0] if result is not None else None
 
 def removeFailedLog(email):
+
+    """
+    Removes failed login attempts if the lockout window has passed or the correct password is given
+
+    Args:
+        email (str): The email given by the user
+    """
     
     conn = getConnection()
     cursor = conn.cursor()
@@ -213,6 +293,13 @@ def removeFailedLog(email):
     conn.close()
 
 def clearLogs(cursor):
+
+    """
+    Clears logs from the logs table if they are over 30 days old
+    
+    Args:
+        cursor (sqlite3.cursor): Active cursor from the calling function
+    """
     
     cursor.execute(
         "DELETE FROM logs WHERE timestamp < datetime('now', '-30 days')",

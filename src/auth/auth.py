@@ -4,7 +4,7 @@ from .db_handler import saveRegisterData, getRegisterEmail, getPassword
 from .data_validation import isValidEmail, checkPassword
 from .user_lockout import isLocked, resetFailedAttempts, logFailedAttempt
 from .logger import logUser
-from .config import TEST_MODE, TEST_EMAIL, TEST_PASSWORD
+from .config import TEST_MODE, TEST_EMAIL, TEST_PASSWORD, TIMEZONE
 
 def register(email, password, confirmPassword):
     """
@@ -43,7 +43,7 @@ def register(email, password, confirmPassword):
     newUser = {
     "email": email,
     "password": hashedPassword,
-    "user_created": datetime.now()
+    "user_created": datetime.now(TIMEZONE)
     }
 
     saveRegisterData(newUser)
@@ -63,40 +63,42 @@ def login(email, password):
         tuple (success (boolean), message (str))
     """
 
+    email = email.strip().lower()
+
     overrideResult = overrideLogin(email, password)
     if overrideResult:
         return overrideResult
 
-    email = email.strip().lower()
-
-    now = datetime.now()
-
-    if not getRegisterEmail(email):
-        return False, "Email not found"
-
-    #Takes hashed password which corresponds with given email    
-    storedHash = getPassword(email)
-    storedHash = storedHash.encode('utf-8')
+    now = datetime.now(TIMEZONE)
 
     locked, minutes, seconds = isLocked(email)
 
     if locked:
         return False, f"Too many attempts. Try again in {minutes}m {seconds}s."
 
+    #Takes hashed password which corresponds with given email    
+    storedHash = getPassword(email)
+
+    if storedHash is None:
+        bcrypt.checkpw(password.encode('utf-8'), bcrypt.hashpw(b"dummy", bcrypt.gensalt()))
+        loginResult = "Fail"
+        logUser(email, now, loginResult)
+        logFailedAttempt(email)
+        return False, "Incorrect Details"
+
+    storedHash = storedHash.encode('utf-8')
+
     #Password authentication
     if bcrypt.checkpw(password.encode('utf-8'), storedHash):
-
             loginResult = "Success"
             logUser(email, now, loginResult)
             resetFailedAttempts(email)
-
             return True, "Login successful"
     else:
         loginResult = "Fail"
         logUser(email, now, loginResult)
         logFailedAttempt(email)
-    
-        return False, "Incorrect password"
+        return False, "Incorrect Details"
 
 def overrideLogin(email, password):
     """
@@ -114,7 +116,6 @@ def overrideLogin(email, password):
     if not TEST_MODE:
         return None
 
-    email = email.strip().lower()
     password = password.strip()
 
     if email == TEST_EMAIL and password == TEST_PASSWORD:

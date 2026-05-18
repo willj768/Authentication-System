@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import pytz
 
 #Establishes path to database
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -22,3 +23,6 @@ TEST_PASSWORD = os.getenv("TEST_PASSWORD")
 
 #Chat Application
 MESSAGE_HISTORY_LIMIT = 50
+
+#Current time in UK
+TIMEZONE = pytz.timezone("Europe/London")
