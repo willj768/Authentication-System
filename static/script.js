@@ -38,6 +38,10 @@ function login() {
         const message = document.getElementById("loginMessage");
         message.textContent = data.message;
         message.style.color = data.success ? "green" : "red";
+
+        if (data.success) {
+            window.location.href = "/chat";  // ← redirect to chat page
+        }
     })
     .finally(() => {
         setTimeout(() => {

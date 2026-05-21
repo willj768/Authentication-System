@@ -3,7 +3,10 @@ from auth import register, login, generateRandomPassword
 import os
 from auth.db_handler import initDB
 from flask_socketio import SocketIO, emit
-#from chat import sendMessage, loadHistory
+from chat import sendMessage, getRecentMessages
+from dotenv import load_dotenv
+
+load_dotenv()
 
 initDB()
 
@@ -13,8 +16,8 @@ templateDir = os.path.join(projectRoot, "templates")
 staticDir = os.path.join(projectRoot, "static")
 
 app = Flask(__name__, template_folder=templateDir, static_folder=staticDir)
-app.config["SECRET_KEY"] = "your-secret-key"
-socketio = SocketIO(app)
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+socketio = SocketIO(app, manage_session=False, cors_allowed_origins="*")
 
 @app.route("/")
 def home():
@@ -46,13 +49,21 @@ def chatRoute():
 
 @socketio.on("connect")
 def handleConnect():
-    history = loadHistory()
+    if "email" not in session:
+        return False
+    history = getRecentMessages()
     emit("history", history)
 
+@socketio.on("message")
 def handleMessage(data):
-    email = session.get("email", "unknown")
-    sendMessage(email, data["message"])
-    emit("message", {"email": email, "message": data["message"]}, broadcast=True)
+    if "email" not in session:
+        return
+    email = session.get("email")
+    message = data.get("message", "").strip()
+    if not message:
+        return
+    sendMessage(email, message)
+    emit("message", {"email": email, "message": message}, broadcast=True)
 
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True, debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
