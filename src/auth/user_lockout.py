@@ -100,4 +100,4 @@ def resetFailedAttempts(email):
 
     # Clear the attempt count and timestamp if a record exists
     if getFailedLog(email):
-        removeFailedLog()
+        removeFailedLog(email)
