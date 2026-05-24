@@ -93,7 +93,7 @@ def login(email, password):
             loginResult = "Success"
             logUser(email, now, loginResult)
             resetFailedAttempts(email)
-            return True, "Login successful"
+            return True, "Login Successful"
     else:
         loginResult = "Fail"
         logUser(email, now, loginResult)

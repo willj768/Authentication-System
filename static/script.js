@@ -1,7 +1,11 @@
 function register() {
-    const email = document.getElementById("regEmail").value;
-    const password = document.getElementById("regPassword").value;
-    const confirmPassword = document.getElementById("regConfirmPassword").value;
+    const emailInput = document.getElementById("regEmail");
+    const passwordInput = document.getElementById("regPassword");
+    const confirmPasswordInput = document.getElementById("regConfirmPassword");
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
 
     fetch("/register", {
         method: "POST",
@@ -15,13 +19,21 @@ function register() {
         const message = document.getElementById("regMessage");
         message.textContent = data.message;
         message.style.color = data.success ? "green" : "red";
+
+        //Clears input fields after register button is pressed
+        emailInput.value = "";
+        passwordInput.value = "";
+        confirmPasswordInput.value = "";
     });
 }
 
 function login() {
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
+    const emailInput = document.getElementById("loginEmail");
+    const passwordInput = document.getElementById("loginPassword");
     const button = document.getElementById("loginButton");
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
 
     button.disabled = true;
     button.textContent = "Logging in...";
@@ -38,6 +50,10 @@ function login() {
         const message = document.getElementById("loginMessage");
         message.textContent = data.message;
         message.style.color = data.success ? "green" : "red";
+
+        //Clears input fields after login button is pressed
+        emailInput.value = "";
+        passwordInput.value = "";
 
         if (data.success) {
             window.location.href = "/chat";  // ← redirect to chat page
