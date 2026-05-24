@@ -9,10 +9,10 @@
 <body>
 
   <div class="chat-wrapper">
-    <header class="chat-header">
-      <h2>💬 Live Chat</h2>
+    <div class="chat-header">
+      <h2>Chat Room</h2>
       <span id="status" class="status offline">Connecting...</span>
-    </header>
+    </div>
 
     <div class="chat-messages" id="messages"></div>
 
@@ -28,7 +28,6 @@
     </div>
   </div>
 
-  <!-- Socket.IO client served by Flask-SocketIO -->
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script src="/static/chat.js"></script>
 </body>
