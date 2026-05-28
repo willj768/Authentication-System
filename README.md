@@ -60,6 +60,9 @@ A full-featured web-based authentication system built with Flask and Flask-Socke
 ### Validation Example
 ![Validation](screenshots/errormsg.png)
 
+### Chat App
+![Chat](screenshots/chat.png)
+
 ## Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) and Docker Compose (recommended)
 - Or Python 3.10+ with pip for manual setup
