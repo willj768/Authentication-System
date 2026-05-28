@@ -141,6 +141,7 @@ python src/app.py
 | `TEST_EMAIL` | Email used for test mode login | None |
 | `TEST_PASSWORD` | Password used for test mode login | None |
 | `FLASK_DEBUG` | Enables Flask debug mode | `false` |
+| `SECRET_KEY`    | Flask session secret key | None |
 
 ## Docker Commands
 
