@@ -180,7 +180,6 @@ Authentication-System/
 │   ├── chat/
 │   │   ├── __init__.py             # Exposes chat functions
 │   │   ├── chat.py                 # Chat room logic and message handling
-│   │   └── db_handler.py           # Chat-specific database queries
 │   │
 │   └── app.py                      # Main Flask application and route handlers
 │
