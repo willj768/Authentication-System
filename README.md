@@ -162,26 +162,23 @@ Authentication-System/
 │   └── auth.db                     # SQLite database (users, logs, failed_attempts, messages)
 │
 ├── screenshots/
+|   ├── chat.png 
 │   ├── errormsg.png
 │   ├── login.png
 │   └── pwgen.png
 │
 ├── src/
 │   ├── auth/
-│   │   ├── __init__.py             # Exposes register, login, generateRandomPassword
 │   │   ├── auth.py                 # Core register and login logic
-│   │   ├── config.py               # Constants, file paths, and environment variables
 │   │   ├── data_validation.py      # Email and password validation
-│   │   ├── db_handler.py           # SQLite database connection and query functions
 │   │   ├── logger.py               # Login attempt logging
 │   │   ├── password_utils.py       # Random password generation
 │   │   └── user_lockout.py         # Failed attempt tracking and account lockout
 │   │
-│   ├── chat/
-│   │   ├── __init__.py             # Exposes chat functions
-│   │   ├── chat.py                 # Chat room logic and message handling
-│   │
-│   └── app.py                      # Main Flask application and route handlers
+│   ├── __init__.py                 # Exposes register, login, generateRandomPassword
+│   ├── app.py                      # Main Flask application and route handlers
+│   ├── config.py                   # Constants, file paths, and environment variables
+│   └── db_handler.py               # SQLite database connection and query functions
 │
 ├── static/
 │   ├── chat.css                    # Chat room styling
