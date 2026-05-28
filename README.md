@@ -87,6 +87,7 @@ TEST_MODE=False
 TEST_EMAIL=
 TEST_PASSWORD=
 FLASK_DEBUG=false
+SECRET_KEY=
 ```
 
 3. Build and run the container
@@ -140,7 +141,7 @@ python src/app.py
 | `TEST_MODE` | Enables developer login bypass | `False` |
 | `TEST_EMAIL` | Email used for test mode login | None |
 | `TEST_PASSWORD` | Password used for test mode login | None |
-| `FLASK_DEBUG` | Enables Flask debug mode | `false` |
+| `FLASK_DEBUG` | Enables Flask debug mode | `False` |
 | `SECRET_KEY`    | Flask session secret key | None |
 
 ## Docker Commands
