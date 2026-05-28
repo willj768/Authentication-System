@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, session, redirect
 from auth import register, login, generateRandomPassword
 import os
-from auth.db_handler import initDB
+from auth.db_handler import initDB, delMessages
 from flask_socketio import SocketIO, emit
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
