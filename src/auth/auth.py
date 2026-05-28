@@ -1,10 +1,10 @@
 import bcrypt
 from datetime import datetime
-from .db_handler import saveRegisterData, getRegisterEmail, getPassword
+from db_handler import saveRegisterData, getRegisterEmail, getPassword
 from .data_validation import isValidEmail, checkPassword
 from .user_lockout import isLocked, resetFailedAttempts, logFailedAttempt
 from .logger import logUser
-from .config import TEST_MODE, TEST_EMAIL, TEST_PASSWORD, TIMEZONE
+from config import TEST_MODE, TEST_EMAIL, TEST_PASSWORD, TIMEZONE
 
 def register(email, password, confirmPassword):
     """

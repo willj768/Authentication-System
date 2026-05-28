@@ -1,4 +1,4 @@
-from .db_handler import saveLogsData
+from db_handler import saveLogsData
 from .user_lockout import logFailedAttempt
 
 def logUser(email, now, loginResult):

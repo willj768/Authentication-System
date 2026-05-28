@@ -1,6 +1,6 @@
 import time
-from .config import WINDOW_SECONDS, MAX_ATTEMPTS
-from .db_handler import saveFailedLogsData, getFailedLog, getFirstAttempt, getAttemptNum, removeFailedLog
+from config import WINDOW_SECONDS, MAX_ATTEMPTS
+from db_handler import saveFailedLogsData, getFailedLog, getFirstAttempt, getAttemptNum, removeFailedLog
 import traceback
 
 def logFailedAttempt(email):

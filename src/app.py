@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, render_template, session, redirect
-from auth import register, login, generateRandomPassword
+from auth.auth import register, login
+from auth.password_utils import generateRandomPassword
 import os
-from auth.db_handler import initDB, delMessages
+from db_handler import initDB, sendMessage, getRecentMessages
 from flask_socketio import SocketIO, emit
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from chat import sendMessage, getRecentMessages
-from auth.config import ALLOWED_ORIGINS, SECRET_KEY
+from config import ALLOWED_ORIGINS, SECRET_KEY
 
 initDB()
 

@@ -1,5 +1,5 @@
 import re
-from .config import EMAIL_REGEX
+from config import EMAIL_REGEX
 
 def checkPassword(password):
 
