@@ -86,7 +86,7 @@ Then open `.env` and fill in your values:
 TEST_MODE=False
 TEST_EMAIL=
 TEST_PASSWORD=
-FLASK_DEBUG=false
+FLASK_DEBUG=False
 SECRET_KEY=
 ```
 
