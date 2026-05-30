@@ -6,20 +6,16 @@ from db_handler import initDB, sendMessage, getRecentMessages
 from flask_socketio import SocketIO, emit
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from config import ALLOWED_ORIGINS, SECRET_KEY
+from config import ALLOWED_ORIGINS, SECRET_KEY, PROJECT_ROOT, TEMPLATE_DIR, STATIC_DIR, SESSION_COOKIE_SAMESITE, SESSION_COOKIE_HTTPONLY, SESSION_COOKIE_SECURE
 
 initDB()
 
-projectRoot = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 
-templateDir = os.path.join(projectRoot, "templates")
-staticDir = os.path.join(projectRoot, "static")
-
-app = Flask(__name__, template_folder=templateDir, static_folder=staticDir)
 app.config["SECRET_KEY"] = SECRET_KEY
-
-app.config["SESSION_COOKIE_SAMESITE"] = "Strict"
-app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = SESSION_COOKIE_SAMESITE
+app.config["SESSION_COOKIE_HTTPONLY"] = SESSION_COOKIE_HTTPONLY
+app.config["SESSION_COOKIE_SECURE"] = SESSION_COOKIE_SECURE
 
 socketio = SocketIO(app, manage_session=False, cors_allowed_origins=ALLOWED_ORIGINS)
 

@@ -30,3 +30,12 @@ MESSAGE_HISTORY_LIMIT = 50
 
 #Current time in UK
 TIMEZONE = pytz.timezone("Europe/London")
+
+#App
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(PROJECT_ROOT, "templates")
+STATIC_DIR = os.path.join(PROJECT_ROOT, "static")
+
+SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = False
