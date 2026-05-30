@@ -175,7 +175,7 @@ Authentication-System/
 │   │   ├── password_utils.py       # Random password generation
 │   │   └── user_lockout.py         # Failed attempt tracking and account lockout
 │   │
-│   ├── __init__.py                 # Exposes register, login, generateRandomPassword
+│   ├── __init__.py                 # Exposes register, login, generateRandomPassword, sendMessages, getRecentMessages
 │   ├── app.py                      # Main Flask application and route handlers
 │   ├── config.py                   # Constants, file paths, and environment variables
 │   └── db_handler.py               # SQLite database connection and query functions
