@@ -22,7 +22,7 @@ A full-featured web-based authentication system built with Flask and Flask-Socke
 - **Failed Attempt Tracking**: Monitor and log failed authentication attempts
 - **Test Mode**: Developer bypass login using environment-controlled credentials
 
-### 💬 Chat Room (Under Development)
+### 💬 Chat Room
 - **Real-time Messaging**: WebSocket-powered chat using Flask-SocketIO
 - **Message Persistence**: Chat messages stored in SQLite database
 - **Per-user Attribution**: Messages stored and displayed with email
