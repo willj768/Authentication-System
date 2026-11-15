@@ -48,7 +48,7 @@ def loginRoute():
         return jsonify({"success": False, "message": "Missing Fields"}), 400
     success, message = login(email, password) #Passes inputs to login function
     if success:
-        session["email"] = data["email"].lower() #Stores the user's email in the session upon a successful login
+        session["email"] = data["email"].lower().strip() #Stores the user's email in the session upon a successful login
     return jsonify({"success": success, "message": message})
 
 @app.route("/generate-password", methods=["GET"]) #Listens for GET requests to generate a password

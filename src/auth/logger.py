@@ -14,7 +14,7 @@ def logUser(email, now, loginResult):
 
     newUserLog = {
     "email": email,
-    "timestamp": now,
+    "timestamp": str(now),
     "result": loginResult
     }
 
