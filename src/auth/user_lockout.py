@@ -1,7 +1,6 @@
 import time
 from config import WINDOW_SECONDS, MAX_ATTEMPTS
 from db_handler import saveFailedLogsData, getFailedLog, getFirstAttempt, getAttemptNum, removeFailedLog
-import traceback
 
 def logFailedAttempt(email):
 
@@ -53,7 +52,7 @@ def isLocked(email):
         email (str): The user's email address
 
     Returns:
-        tuple: (is_locked: bool, minutes_remaining: int, seconds_remaining: int): Minutes and seconds are 0 if the account is not locked
+        tuple: (isLocked: bool, minutes: int, seconds: int): Minutes and seconds are 0 if the account is not locked
     """
 
     email = email.lower()

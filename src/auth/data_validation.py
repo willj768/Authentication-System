@@ -1,5 +1,6 @@
 import re
-from config import EMAIL_REGEX
+from config import EMAIL_REGEX, MIN_PW_LENGTH, MAX_PW_LENGTH
+import string
 
 def checkPassword(password):
 
@@ -16,14 +17,15 @@ def checkPassword(password):
         hasLength (boolean): Checks password length
     """
 
-    SPECIAL_CHAR = "!@#$%^&*()-+?_=,<>/"
+    SPECIAL_CHAR = string.punctuation
     
     hasSpecial = any(c in SPECIAL_CHAR for c in password)
     hasNumber = any(c.isdigit() for c in password)
     hasLetter = any(c.isalpha() for c in password)
-    hasLength = len(password) >= 8
+    hasLowerLength = len(password) >= MIN_PW_LENGTH
+    hasUpperLength = len(password) <= MAX_PW_LENGTH
 
-    return hasSpecial and hasNumber and hasLetter and hasLength
+    return hasSpecial and hasNumber and hasLetter and hasLowerLength and hasUpperLength
 
 def isValidEmail(email):
     #Returns whether email is in the correct format

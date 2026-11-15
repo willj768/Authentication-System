@@ -109,7 +109,7 @@ def overrideLogin(email, password):
         password (str): The password provided by the user
 
     Returns:
-        tuple (True, success message): If test credentials match
+        tuple (True, message (str)): If test credentials match
         None: If not in test mode or credentials don't match
     """
 

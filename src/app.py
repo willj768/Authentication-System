@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify, render_template, session, redirect
 from auth.auth import register, login
 from auth.password_utils import generateRandomPassword
-import os
 from db_handler import initDB, sendMessage, getRecentMessages
 from flask_socketio import SocketIO, emit
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from config import ALLOWED_ORIGINS, SECRET_KEY, PROJECT_ROOT, TEMPLATE_DIR, STATIC_DIR, SESSION_COOKIE_SAMESITE, SESSION_COOKIE_HTTPONLY, SESSION_COOKIE_SECURE
+from config import ALLOWED_ORIGINS, SECRET_KEY, PROJECT_ROOT, TEMPLATE_DIR, STATIC_DIR, SESSION_COOKIE_SAMESITE, SESSION_COOKIE_HTTPONLY, SESSION_COOKIE_SECURE, FLASK_DEBUG
 
 initDB()
 
@@ -49,7 +48,7 @@ def loginRoute():
         return jsonify({"success": False, "message": "Missing Fields"}), 400
     success, message = login(email, password) #Passes inputs to login function
     if success:
-        session["email"] = data["email"] #Stores the user's email in the session upon a successful login
+        session["email"] = data["email"].lower() #Stores the user's email in the session upon a successful login
     return jsonify({"success": success, "message": message})
 
 @app.route("/generate-password", methods=["GET"]) #Listens for GET requests to generate a password
@@ -83,7 +82,7 @@ def handleMessage(data):
     emit("message", {"email": email, "message": message}, broadcast=True)
 
 if __name__ == "__main__":
-    socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True, debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
+    socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True, debug=FLASK_DEBUG)
 
 
 
