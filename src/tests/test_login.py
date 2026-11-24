@@ -1,10 +1,7 @@
 import pytest
 from auth.auth import register, login
 from db_handler import getConnection
-
-@pytest.fixture
-def user(db):
-    register("user@example.com", "password123!", "password123!")
+from auth.user_lockout import isLocked
 
 @pytest.fixture
 def devCreds(monkeypatch):
@@ -65,7 +62,7 @@ def getLogs():
 def testSuccessIncrementsRows(user):
     login("user@example.com", "password123!")
     rows = getLogs()
-    assert len(getLogs()) == 1
+    assert len(rows) == 1
     assert rows[0]["result"] == "Success"
     assert rows[0]["email"] == "user@example.com"
 
@@ -73,22 +70,56 @@ def testSuccessIncrementsRows(user):
 def testFailureIncrementsRows(user):
     login("user@example.com", "incorrectpassword")
     rows = getLogs()
-    assert len(getLogs()) == 1
+    assert len(rows) == 1
     assert rows[0]["result"] == "Fail"
     assert rows[0]["email"] == "user@example.com"
+
+def testUnknownEmailIncrementsRow(db):
+    login("unknown@example.com", "password123!")
+    rows = getLogs()
+    assert len(rows) == 1
+    assert rows[0]["result"] == "Fail"
+    assert rows[0]["email"] == "unknown@example.com"
+
+def testLockoutAttemptNotLogged(user, clock):
+    for _ in range(3):
+        login("user@example.com", "incorrectpassword")
+    login("user@example.com", "password123!")
+    rows = getLogs()
+    assert len(rows) == 3
 
 #Correct details logged upon messy successful login
 def testEmailIncrementsRowsNormalised(user):
     login(" USER@Example.com", "password123!")
     rows = getLogs()
-    assert len(getLogs()) == 1
+    assert len(rows) == 1
     assert rows[0]["email"] == "user@example.com"
 
-def testDevModeOn(db, devCreds):
+def testDevModeOn(devCreds):
     assert login("dev@example.com", "devpass") == (True, "Login successful (test mode)")
 
 def testDevModeOff(db, devCreds, monkeypatch):
     monkeypatch.setattr("auth.auth.TEST_MODE", False)
     assert login("dev@example.com", "devpass") == (False, "Incorrect Details")
+
+def testIncorrectDevPassword(db, devCreds):
+    assert login("dev@example.com", "incorrectpassword") == (False, "Incorrect Details")
+
+def testUserLoginWithDevMode(user, devCreds):
+    assert login("user@example.com", "password123!") == (True, "Login Successful")
+
+def testDevLoginDB(db, devCreds):
+    login("dev@example.com", "devpass")
+    rows = getLogs()
+    assert len(rows) == 0
+
+def testDevModeIgnoresLockout(db, devCreds, clock):
+    for _ in range(3):
+        login("dev@example.com", "incorrectpassword")
+    clock[0] = 1299.0
+    assert isLocked("dev@example.com")[0] is True
+    assert login("dev@example.com", "devpass") == (True, "Login successful (test mode)")
+
+
 
 
